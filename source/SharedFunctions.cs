@@ -2,11 +2,9 @@
 {
     internal static class SharedFunctions
     {
-        private const char BOM = (char)65279;
-
-        public static bool IsWhitespace(char character)
+        public static bool IsWhiteSpace(char character)
         {
-            return IsEndOfLine(character) || character == ' ' || character == '\t' || character == BOM;
+            return char.IsWhiteSpace(character) || IsEndOfLine(character) || character == (char)65279; //BOM
         }
 
         public static bool IsEndOfLine(char character)

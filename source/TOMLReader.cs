@@ -119,7 +119,7 @@ namespace TOML
 
                     throw new InvalidOperationException("Unterminated string literal");
                 }
-                else if (SharedFunctions.IsWhitespace(c))
+                else if (SharedFunctions.IsWhiteSpace(c))
                 {
                     position += bytesRead;
                 }
@@ -137,7 +137,7 @@ namespace TOML
                                 //trim whitespace
                                 int trim = 0;
                                 byteReader.PeekUTF8(position - trim - 1, out c, out _);
-                                while (SharedFunctions.IsWhitespace(c))
+                                while (SharedFunctions.IsWhiteSpace(c))
                                 {
                                     trim++;
                                     byteReader.PeekUTF8(position - trim - 1, out c, out _);
