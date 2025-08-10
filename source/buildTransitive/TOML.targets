@@ -3,7 +3,7 @@
 
     <ItemGroup>
         <Reference Include="TOML">
-            <HintPath>$(MSBuildThisFileDirectory)..\lib\net9.0\$(Configuration)\TOML.dll</HintPath>
+            <HintPath>$(MSBuildThisFileDirectory)..\lib\$(TargetFramework)\$(Configuration)\TOML.dll</HintPath>
         </Reference>
     </ItemGroup>
 
