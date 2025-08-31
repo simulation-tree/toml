@@ -207,12 +207,105 @@ namespace TOML
             return default;
         }
 
+        /// <summary>
+        /// Adds a new <see cref="ValueType.Text"/> key-value pair to this TOML table.
+        /// </summary>
+        public readonly void Add(ReadOnlySpan<char> key, ReadOnlySpan<char> text)
+        {
+            MemoryAddress.ThrowIfDefault(table);
+            ThrowIfKeyIsAlreadyPresent(key);
+
+            TOMLKeyValue keyValue = new(key, text);
+            table->keyValues.Add(keyValue);
+        }
+
+        /// <summary>
+        /// Adds a new <see cref="ValueType.Number"/> key-value pair to this TOML table.
+        /// </summary>
+        public readonly void Add(ReadOnlySpan<char> key, double number)
+        {
+            MemoryAddress.ThrowIfDefault(table);
+            ThrowIfKeyIsAlreadyPresent(key);
+
+            TOMLKeyValue keyValue = new(key, number);
+            table->keyValues.Add(keyValue);
+        }
+
+        /// <summary>
+        /// Adds a new <see cref="ValueType.Boolean"/> key-value pair to this TOML table.
+        /// </summary>
+        public readonly void Add(ReadOnlySpan<char> key, bool boolean)
+        {
+            MemoryAddress.ThrowIfDefault(table);
+            ThrowIfKeyIsAlreadyPresent(key);
+
+            TOMLKeyValue keyValue = new(key, boolean);
+            table->keyValues.Add(keyValue);
+        }
+
+        /// <summary>
+        /// Adds a new <see cref="ValueType.DateTime"/> key-value pair to this TOML table.
+        /// </summary>
+        public readonly void Add(ReadOnlySpan<char> key, DateTime dateTime)
+        {
+            MemoryAddress.ThrowIfDefault(table);
+            ThrowIfKeyIsAlreadyPresent(key);
+
+            TOMLKeyValue keyValue = new(key, dateTime);
+            table->keyValues.Add(keyValue);
+        }
+
+        /// <summary>
+        /// Adds a new <see cref="ValueType.TimeSpan"/> key-value pair to this TOML table.
+        /// </summary>
+        public readonly void Add(ReadOnlySpan<char> key, TimeSpan timeSpan)
+        {
+            MemoryAddress.ThrowIfDefault(table);
+            ThrowIfKeyIsAlreadyPresent(key);
+
+            TOMLKeyValue keyValue = new(key, timeSpan);
+            table->keyValues.Add(keyValue);
+        }
+
+        /// <summary>
+        /// Adds a new <see cref="ValueType.Array"/> key-value pair to this TOML table.
+        /// </summary>
+        public readonly void Add(ReadOnlySpan<char> key, TOMLArray array)
+        {
+            MemoryAddress.ThrowIfDefault(table);
+            ThrowIfKeyIsAlreadyPresent(key);
+
+            TOMLKeyValue keyValue = new(key, array);
+            table->keyValues.Add(keyValue);
+        }
+
+        /// <summary>
+        /// Adds a new <see cref="ValueType.Table"/> key-value pair to this TOML table.
+        /// </summary>
+        public readonly void Add(ReadOnlySpan<char> key, TOMLTable table)
+        {
+            MemoryAddress.ThrowIfDefault(this.table);
+            ThrowIfKeyIsAlreadyPresent(key);
+
+            TOMLKeyValue keyValue = new(key, table);
+            this.table->keyValues.Add(keyValue);
+        }
+
         [Conditional("DEBUG")]
         private readonly void ThrowIfKeyIsMissing(ReadOnlySpan<char> key)
         {
             if (!ContainsKey(key))
             {
                 throw new ArgumentException($"Key `{key.ToString()}` is missing in TOML object", nameof(key));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private readonly void ThrowIfKeyIsAlreadyPresent(ReadOnlySpan<char> key)
+        {
+            if (ContainsKey(key))
+            {
+                throw new ArgumentException($"Key `{key.ToString()}` is already present in TOML object", nameof(key));
             }
         }
 
