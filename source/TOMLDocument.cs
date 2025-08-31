@@ -359,6 +359,24 @@ namespace TOML
             return new(tomlObject);
         }
 
+        /// <summary>
+        /// Tries to parse the given <paramref name="text"/> into a TOML document.
+        /// </summary>
+        public static bool TryParse(ReadOnlySpan<char> text, out TOMLDocument tomlDocument)
+        {
+            using ByteReader byteReader = ByteReader.CreateFromUTF8(text);
+            try
+            {
+                tomlDocument = byteReader.ReadObject<TOMLDocument>();
+                return true;
+            }
+            catch (Exception)
+            {
+                tomlDocument = default;
+                return false;
+            }
+        }
+
         private struct Implementation
         {
             public List<TOMLKeyValue> keyValues;
