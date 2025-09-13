@@ -103,7 +103,7 @@ namespace TOML
                 MemoryAddress.ThrowIfDefault(data);
                 ThrowIfNotTypeOf(ValueType.Array);
 
-                return new(data.Pointer);
+                return new(data.pointer);
             }
         }
 
@@ -117,7 +117,7 @@ namespace TOML
                 MemoryAddress.ThrowIfDefault(data);
                 ThrowIfNotTypeOf(ValueType.Table);
 
-                return new(data.Pointer);
+                return new(data.pointer);
             }
         }
 
@@ -270,12 +270,12 @@ namespace TOML
 
             if (valueType == ValueType.Array)
             {
-                TOMLArray array = new(data.Pointer);
+                TOMLArray array = new(data.pointer);
                 array.Dispose();
             }
             else if (valueType == ValueType.Table)
             {
-                TOMLTable table = new(data.Pointer);
+                TOMLTable table = new(data.pointer);
                 table.Dispose();
             }
             else
